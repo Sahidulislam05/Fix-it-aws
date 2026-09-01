@@ -1,0 +1,44 @@
+# Dependencies
+node_modules/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build / output
+.next/
+out/
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Coverage
+coverage/
+
+# Cache
+.cache/
+.eslintcache
+*.tsbuildinfo
+
+# Generated files
+generated/prisma/
+
+# Vercel
+.vercel/
+
+# IDE / OS
+.idea/
+.DS_Store
+
+# Certificates
+*.pem
+
