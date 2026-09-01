@@ -42,3 +42,6 @@ generated/prisma/
 # Certificates
 *.pem
 
+/src/generated/
+
+docker-compose.override.yml
