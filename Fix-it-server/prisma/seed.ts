@@ -4,7 +4,7 @@ import { Role } from "../generated/prisma/enums";
 import config from "../src/config";
 import { prisma } from "../src/lib/prisma";
 
-// FixItNow এর ৮টা মূল সার্ভিস ক্যাটাগরি (এসাইনমেন্ট ডকুমেন্টে উল্লেখিত উদাহরণ অনুযায়ী)
+
 const defaultCategories = [
     { name: "Plumbing", description: "Pipe fitting, leak repair, and water line installation", icon: "🔧" },
     { name: "Electrical", description: "Wiring, switchboard, and electrical appliance repair", icon: "⚡" },
