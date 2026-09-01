@@ -41,13 +41,13 @@ const loginUser = async (payload: ILoginUser) => {
   const accessToken = jwtUtils.createToken(
     jwtPayload,
     config.jwt_access_secret,
-    config.jwt_access_expires_in as SignOptions,
+    config.jwt_access_expires_in as SignOptions["expiresIn"],
   );
 
   const refreshToken = jwtUtils.createToken(
     jwtPayload,
     config.jwt_refresh_secret,
-    config.jwt_refresh_expires_in as SignOptions,
+    config.jwt_refresh_expires_in as SignOptions["expiresIn"],
   );
 
   return {
@@ -106,7 +106,7 @@ const refreshToken = async (token: string) => {
   const accessToken = jwtUtils.createToken(
     jwtPayload,
     config.jwt_access_secret,
-    config.jwt_access_expires_in as SignOptions,
+    config.jwt_access_expires_in as SignOptions["expiresIn"],
   );
 
   return { accessToken };

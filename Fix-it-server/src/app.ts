@@ -22,34 +22,53 @@ import { userRoutes } from "./modules/user/user.route";
 
 const app: Application = express();
 
-const allowedOrigins = (
-  config.cors_origins || "https://fix-it-now-delta.vercel.app"
-)
-  .split(",")
-  .map((origin) => origin.trim());
+const defaultOrigins = [
+  "http://localhost:3000",
+  "http://127.0.0.1:3000",
+  "https://fix-it-now-delta.vercel.app",
+];
+
+const allowedOrigins = Array.from(
+  new Set([
+    ...defaultOrigins,
+    ...(config.cors_origins || "")
+      .split(",")
+      .map((origin) => origin.trim())
+      .filter(Boolean),
+  ]),
+);
 
 const sslCommerzOrigins = [
   "https://sandbox.sslcommerz.com",
   "https://securepay.sslcommerz.com",
   "https://sslcommerz.com",
 ];
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (
-        !origin ||
-        allowedOrigins.includes(origin) ||
-        sslCommerzOrigins.includes(origin) ||
-        origin.endsWith(".sslcommerz.com")
-      ) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-  }),
-);
+
+const corsOptions = {
+  origin: function (
+    origin: string | undefined,
+    callback: (err: Error | null, allow?: boolean) => void,
+  ) {
+    if (
+      !origin ||
+      allowedOrigins.includes(origin) ||
+      sslCommerzOrigins.includes(origin) ||
+      origin.endsWith(".sslcommerz.com")
+    ) {
+      callback(null, true);
+      return;
+    }
+
+    console.warn(`Blocked CORS request from origin: ${origin}`);
+    callback(new Error("Not allowed by CORS"));
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+};
+
+app.use(cors(corsOptions));
+app.options(/.*/, cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

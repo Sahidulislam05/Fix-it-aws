@@ -2,10 +2,10 @@
 FROM node:24-alpine AS base
 WORKDIR /app
 
-# ---------- Stage 2: dependencies (dev সহ, কারণ prisma CLI ও tsc build এর জন্য লাগবে) ----------
+# ---------- Stage 2: dependencies ----------
 FROM base AS deps
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm ci --ignore-scripts
 
 # ---------- Stage 3: build ----------
 FROM base AS builder
@@ -28,5 +28,4 @@ USER expressjs
 EXPOSE 5000
 ENV PORT=5000
 
-
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/server.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/src/server.js"]
