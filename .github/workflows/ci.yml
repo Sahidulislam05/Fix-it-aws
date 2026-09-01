@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: frontend
+        working-directory: fix-it-client
     env:
       NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
     steps:
@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: "24"
           cache: "npm"
-          cache-dependency-path: frontend/package-lock.json
+          cache-dependency-path: fix-it-client/package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: backend
+        working-directory: fix-it-server
     env:
       DATABASE_URL: ${{ secrets.DATABASE_URL || 'postgresql://ci_user:ci_pass@localhost:5432/ci_db' }}
     steps:
@@ -54,7 +54,7 @@ jobs:
         with:
           node-version: "24"
           cache: "npm"
-          cache-dependency-path: backend/package-lock.json
+          cache-dependency-path: fix-it-server/package-lock.json
 
       - name: Install dependencies
         run: npm ci
